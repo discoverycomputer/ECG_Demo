@@ -1,29 +1,20 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
-
+int count;
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
+    ,count(0.0),
+    i(0)
 {
     ui->setupUi(this);
     //set up qcustom to plot
     ui->customplot->addGraph();
+    ui->customplot->graph(0)->setPen(QPen(QColor(40, 110, 255)));
     ui->customplot->graph(0)->setScatterStyle(QCPScatterStyle::ssCircle);
-    ui->customplot->graph()->setLineStyle(QCPGraph::lsLine);
-    ui->customplot->xAxis->setLabel("X-axis");
-    ui->customplot->yAxis->setLabel("Y-axis");
-    ui->customplot->xAxis->setRange(0,100);
-    ui->customplot->yAxis->setRange(0,100);
-    ui->customplot->graph(0)->setPen(QPen(Qt::blue)); // line color blue for first graph
-    ui->customplot->graph(0)->setBrush(QBrush(QColor(0, 0, 255, 20)));
-    QVector<double> x(251), y(251);
-    for(int i=4;i<251;i++)
-    {
-        x[i] = i;
-        y[i] = i;
-    }
-    ui->customplot->graph(0)->setData(x, y);
 
+    x.resize(501);
+    y.resize(501);
 
 
     //config serialPort
@@ -74,6 +65,25 @@ void MainWindow::Read_Data()
         qDebug() <<"Data transform:   " << z;
         Data_From_SerialPort = "";
         IS_Data_Received = false;
+    }
+    qDebug() <<"i = "<<i;
+    x[i] = count;
+    y[i] = z;
+    i++;
+    count = count+1.0;
+    qDebug() <<"x =  "<<count;
+    ui->customplot->graph(0)->setData(x,y);
+    ui->customplot->rescaleAxes();
+    ui->customplot->replot();
+    ui->customplot->update();
+    if(i == 20)
+    {
+        i = 0;
+        count = 0;
+        //ui->customplot->graph(0)->data()->clear();
+        ui->customplot->xAxis->setRange(count,count+10);
+        ui->customplot->replot();
+
     }
 }
 
