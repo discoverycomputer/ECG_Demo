@@ -5,6 +5,8 @@
 #include <QSerialPort>
 #include <Qstring>
 #include <qvector.h>
+#include <QDateTime>
+class QLabel;
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
 QT_END_NAMESPACE
@@ -25,5 +27,9 @@ private:
     QString Data_From_SerialPort;
     bool IS_Data_Received = false;
     int z;
+    QLabel *label;
+    double count;
+    int i;
+    QVector<double> x, y;
 };
 #endif // MAINWINDOW_H
