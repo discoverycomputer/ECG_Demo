@@ -29,7 +29,7 @@ MainWindow::MainWindow(QWidget *parent)
     //checking if connection is fine
     if(COMPORT->isOpen())
     {
-        qDebug()<<"Serial port is connected.";
+        qDebug()<<"Serial port is connected completely.";
     }
     else
     {
