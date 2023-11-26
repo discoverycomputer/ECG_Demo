@@ -1,6 +1,6 @@
 QT       += core gui printsupport
 QT       += core gui serialport
-QMAKE_CXXFLAGS += -Wa,-mbig-obj
+
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
 CONFIG += c++17
